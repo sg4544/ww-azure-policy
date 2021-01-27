@@ -1,0 +1,36 @@
+{
+ "properties": {
+  "displayName": "sql-tde-deny",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Deny the ability to disable transparent data encryption status for SQL databases",
+  "metadata": {
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-22T12:18:06.1462917Z",
+   "updatedBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "updatedOn": "2021-01-26T14:26:41.5250909Z",
+   "category": "SQL"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.SQL/servers/databases/transparentDataEncryption"
+     },
+     {
+      "field": "Microsoft.Sql/transparentDataEncryption.status",
+      "notEquals": "enabled"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/f8d2d291-e657-46cc-867b-65cbdbbf0463",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "f8d2d291-e657-46cc-867b-65cbdbbf0463"
+}

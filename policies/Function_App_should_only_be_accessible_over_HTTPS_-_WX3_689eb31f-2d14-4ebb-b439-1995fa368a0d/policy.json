@@ -1,0 +1,44 @@
+{
+ "properties": {
+  "displayName": "Function App should only be accessible over HTTPS - WX3",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Function App should only be accessible over HTTPS - WX3",
+  "metadata": {
+   "category": "App Platform",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-26T12:46:40.8956876Z",
+   "updatedBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "updatedOn": "2021-01-26T14:25:05.9723581Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Web/sites"
+     },
+     {
+      "anyOf": [
+       {
+        "field": "Microsoft.Web/sites/httpsOnly",
+        "exists": "false"
+       },
+       {
+        "field": "Microsoft.Web/sites/httpsOnly",
+        "equals": "false"
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/689eb31f-2d14-4ebb-b439-1995fa368a0d",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "689eb31f-2d14-4ebb-b439-1995fa368a0d"
+}

@@ -1,0 +1,43 @@
+{
+ "properties": {
+  "displayName": "Network Security Group Rules for Internet facing virtual machines should be hardened - WX2",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Network Security Group Rules for Internet facing virtual machines should be hardened - WX2",
+  "metadata": {
+   "category": "Security Center",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-25T07:04:26.2451741Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+     },
+     {
+      "field": "type",
+      "equals": "Microsoft.Security/complianceResults"
+     },
+     {
+      "field": "Microsoft.Security/complianceResults/resourceStatus",
+      "notin": [
+       "OffByPolicy",
+       "Healthy"
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/6fd9d62e-9f7d-469c-a417-0d144d8a28d3",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "6fd9d62e-9f7d-469c-a417-0d144d8a28d3"
+}

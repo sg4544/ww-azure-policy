@@ -1,0 +1,43 @@
+{
+ "properties": {
+  "displayName": "Azure DDoS Protection Standard should be enabled - WX2",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Azure DDoS Protection Standard should be enabled - WX2",
+  "metadata": {
+   "category": "Monitoring",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-26T08:16:44.5982056Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "microsoft.network/virtualNetworks"
+     },
+     {
+      "field": "type",
+      "equals": "Microsoft.Security/assessments"
+     },
+     {
+      "field": "Microsoft.Security/assessments/status.code",
+      "notin": [
+       "NotApplicable",
+       "Healthy"
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/35fd4f3d-b212-498b-8633-29263631253f",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "35fd4f3d-b212-498b-8633-29263631253f"
+}

@@ -1,0 +1,36 @@
+{
+ "properties": {
+  "displayName": "Disk Encryption must be enabled - WX2",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Disk Encryption must be enabled - WX2",
+  "metadata": {
+   "category": "Compute",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-26T13:45:11.6607386Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.ClassicCompute/virtualMachines"
+     },
+     {
+      "field": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/storageProfile.osDisk.encryptionSettings.enabled",
+      "notEquals": "enabled"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/a8e45d59-9f60-4b7d-bda2-52464e86ed2c",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "a8e45d59-9f60-4b7d-bda2-52464e86ed2c"
+}

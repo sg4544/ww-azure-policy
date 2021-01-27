@@ -1,0 +1,46 @@
+{
+ "properties": {
+  "displayName": "Allowed locations for resource groups",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Allowed locations for resource groups",
+  "metadata": {
+   "version": "1.0.0",
+   "category": "General",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-25T07:47:27.8229894Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "listOfAllowedLocations": {
+    "type": "Array",
+    "metadata": {
+     "displayName": "Allowed locations",
+     "description": "The list of locations that resource groups can be created in.",
+     "strongType": "location"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+     },
+     {
+      "field": "location",
+      "notIn": "[parameters('listOfAllowedLocations')]"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/71e85f70-95cd-4f2e-889f-697f586af07e",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "71e85f70-95cd-4f2e-889f-697f586af07e"
+}

@@ -1,0 +1,107 @@
+{
+ "properties": {
+  "displayName": "Diagnostic logs in Key Vault should be enabled - WX3",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "Diagnostic logs in Key Vault should be enabled - WX3",
+  "metadata": {
+   "version": "3.0.0",
+   "category": "Monitoring",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-26T07:49:06.3385588Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Deny"
+   },
+   "requiredRetentionDays": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Required retention (days)",
+     "description": "The required diagnostic logs retention in days"
+    },
+    "defaultValue": "365"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "equals": "Microsoft.KeyVault/vaults"
+   },
+   "then": {
+    "effect": "[parameters('effect')]",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "existenceCondition": {
+      "count": {
+       "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+       "where": {
+        "anyOf": [
+         {
+          "allOf": [
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled",
+            "equals": "true"
+           },
+           {
+            "anyOf": [
+             {
+              "field": "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days",
+              "equals": "0"
+             },
+             {
+              "field": "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days",
+              "equals": "[parameters('requiredRetentionDays')]"
+             }
+            ]
+           },
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+            "equals": "true"
+           }
+          ]
+         },
+         {
+          "allOf": [
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+            "equals": "true"
+           },
+           {
+            "anyOf": [
+             {
+              "field": "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled",
+              "notEquals": "true"
+             },
+             {
+              "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+              "exists": false
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      },
+      "greaterOrEquals": 1
+     }
+    }
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/223ef916-c1d4-4795-9bb7-fa60822de7f2",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "223ef916-c1d4-4795-9bb7-fa60822de7f2"
+}

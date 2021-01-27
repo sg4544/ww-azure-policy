@@ -1,0 +1,52 @@
+name: manage-azure-policy-99092a4c
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Allowed_locations_for_resource_groups_71e85f70-95cd-4f2e-889f-697f586af07e/**'
+#      - 'policies/Ensure_https_traffic_only_for_storage_account_05ccd739-5cc3-4974-87ab-abe213eb9463/**'
+#      - 'policies/sql-vulnerability-deny_d676b519-5f4b-43b6-b833-8deb064991e6/**'
+#      - 'policies/Enforce_a_particular_NSG_on_All_Subnets_e2c08164-b658-49ca-aae4-ec68d3b8f463/**'
+#      - 'policies/sql-tde-deny_f8d2d291-e657-46cc-867b-65cbdbbf0463/**'
+#      - 'policies/Management_ports_should_be_closed_on_your_virtual_machines_-_WX2_07a980f9-2d60-4c88-8180-b994556191f3/**'
+#      - 'policies/Diagnostic_logs_in_Key_Vault_should_be_enabled_-_WX3_223ef916-c1d4-4795-9bb7-fa60822de7f2/**'
+#      - 'policies/Azure_DDoS_Protection_Standard_should_be_enabled_-_WX2_35fd4f3d-b212-498b-8633-29263631253f/**'
+#      - 'policies/Function_App_should_only_be_accessible_over_HTTPS_-_WX3_689eb31f-2d14-4ebb-b439-1995fa368a0d/**'
+#      - 'policies/Network_Security_Group_Rules_for_Internet_facing_virtual_machines_should_be_hardened_-_WX2_6fd9d62e-9f7d-469c-a417-0d144d8a28d3/**'
+#      - 'policies/Disk_Encryption_must_be_enabled_-_WX2_a8e45d59-9f60-4b7d-bda2-52464e86ed2c/**'
+#      - .github/workflows/manage-azure-policy-99092a4c.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_99092a4c}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Allowed_locations_for_resource_groups_71e85f70-95cd-4f2e-889f-697f586af07e/**
+          policies/Ensure_https_traffic_only_for_storage_account_05ccd739-5cc3-4974-87ab-abe213eb9463/**
+          policies/sql-vulnerability-deny_d676b519-5f4b-43b6-b833-8deb064991e6/**
+          policies/Enforce_a_particular_NSG_on_All_Subnets_e2c08164-b658-49ca-aae4-ec68d3b8f463/**
+          policies/sql-tde-deny_f8d2d291-e657-46cc-867b-65cbdbbf0463/**
+          policies/Management_ports_should_be_closed_on_your_virtual_machines_-_WX2_07a980f9-2d60-4c88-8180-b994556191f3/**
+          policies/Diagnostic_logs_in_Key_Vault_should_be_enabled_-_WX3_223ef916-c1d4-4795-9bb7-fa60822de7f2/**
+          policies/Azure_DDoS_Protection_Standard_should_be_enabled_-_WX2_35fd4f3d-b212-498b-8633-29263631253f/**
+          policies/Function_App_should_only_be_accessible_over_HTTPS_-_WX3_689eb31f-2d14-4ebb-b439-1995fa368a0d/**
+          policies/Network_Security_Group_Rules_for_Internet_facing_virtual_machines_should_be_hardened_-_WX2_6fd9d62e-9f7d-469c-a417-0d144d8a28d3/**
+          policies/Disk_Encryption_must_be_enabled_-_WX2_a8e45d59-9f60-4b7d-bda2-52464e86ed2c/**

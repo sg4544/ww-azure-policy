@@ -1,0 +1,64 @@
+{
+ "properties": {
+  "displayName": "Enforce a particular NSG on All Subnets",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "This policy enforces a specific NSG on every subnet",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-24T11:47:23.967428Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "nsgId": {
+    "type": "String",
+    "metadata": {
+     "displayName": "NSG Id",
+     "description": "Resource Id of the Network Security Group"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "anyOf": [
+     {
+      "allOf": [
+       {
+        "field": "type",
+        "equals": "Microsoft.Network/virtualNetworks"
+       },
+       {
+        "not": {
+         "field": "Microsoft.Network/virtualNetworks/subnets[*].networkSecurityGroup.id",
+         "equals": "[parameters('nsgId')]"
+        }
+       }
+      ]
+     },
+     {
+      "allOf": [
+       {
+        "field": "type",
+        "equals": "Microsoft.Network/virtualNetworks/subnets"
+       },
+       {
+        "not": {
+         "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+         "equals": "[parameters('nsgId')]"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/e2c08164-b658-49ca-aae4-ec68d3b8f463",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "e2c08164-b658-49ca-aae4-ec68d3b8f463"
+}

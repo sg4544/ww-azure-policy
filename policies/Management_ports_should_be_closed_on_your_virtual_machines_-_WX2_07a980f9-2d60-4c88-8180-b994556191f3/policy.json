@@ -1,0 +1,54 @@
+{
+ "properties": {
+  "displayName": "Management ports should be closed on your virtual machines - WX2",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Management ports should be closed on your virtual machines - WX2",
+  "metadata": {
+   "version": "3.0.0",
+   "category": "Security Center",
+   "createdBy": "5b30d11f-f5df-40a7-8ff9-2d7187558b39",
+   "createdOn": "2021-01-27T07:04:46.6229135Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Deny"
+    ]
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "in": [
+     "Microsoft.Compute/virtualMachines",
+     "Microsoft.ClassicCompute/virtualMachines"
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]",
+    "details": {
+     "type": "Microsoft.Security/assessments",
+     "name": "bc303248-3d14-44c2-96a0-55f5c326b5fe",
+     "existenceCondition": {
+      "field": "Microsoft.Security/assessments/status.code",
+      "in": [
+       "NotApplicable",
+       "Healthy"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "id": "/subscriptions/140bbee0-418f-4549-a321-63f779e9d332/providers/Microsoft.Authorization/policyDefinitions/07a980f9-2d60-4c88-8180-b994556191f3",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "07a980f9-2d60-4c88-8180-b994556191f3"
+}
